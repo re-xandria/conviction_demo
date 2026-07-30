@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody playerBody;
     private Vector2 moveInput;
+    public float jumpForce = 7f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,11 +29,12 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
+    // Adjust function so jump can be performed on platformms
     public void Jump(InputAction.CallbackContext context)
     {
         if (context.performed && playerBody.position.y <= 0.1f)
         {
-            playerBody.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            playerBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
