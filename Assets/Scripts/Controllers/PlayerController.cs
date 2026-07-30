@@ -18,12 +18,22 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 worldMove = transform.right * moveInput.x + transform.forward * moveInput.y;
-        playerBody.linearVelocity = worldMove * moveSpeed;
+        playerBody.linearVelocity = new Vector3(worldMove.x * moveSpeed,
+                                                playerBody.linearVelocity.y,
+                                                worldMove.z * moveSpeed);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.performed && playerBody.position.y <= 0.1f)
+        {
+            playerBody.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+        }
     }
 
 }
