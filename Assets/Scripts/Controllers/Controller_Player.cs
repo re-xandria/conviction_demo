@@ -29,10 +29,11 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
-    // Adjust function so jump can be performed on platformms
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && playerBody.position.y <= 0.1f)
+
+        // Only emable jumping if player is touching the ground
+        if (context.performed && playerBody.linearVelocity.y == 0f)
         {
             playerBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
