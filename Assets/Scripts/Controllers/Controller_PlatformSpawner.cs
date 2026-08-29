@@ -4,12 +4,13 @@ public class Controller_PlatformSpawner : MonoBehaviour
 {
 
     public GameObject platformUnitPrefab;
-    [Range(1, 10)]
+    [Range(1, 100)]
     public int numPlatforms = 5;
+    private float lastPlatformYPosition;
    
-    public float platformXSpread = 0f;
-    public float platformYSpread = 5f;
-    public float platformZSpread = 10f;
+    public float platformXSpread = 0;
+    public float platformYSpread = 5;
+    public float platformZSpread = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,10 +33,12 @@ public class Controller_PlatformSpawner : MonoBehaviour
         // Create first platform, then randomly pick a number from 1-4 and add that many more platforms offset by the width of the platform prefab
 
         int numUnits = Random.Range(1, 4);
-        Vector3 startPosition = new Vector3(Random.Range(-platformXSpread, platformXSpread), Random.Range(-platformYSpread, platformYSpread), Random.Range(0, platformZSpread)) + transform.position;
-        Vector3 updatedPosition = startPosition;
+        float newPlatformYPosition = Random.Range(0, platformYSpread) + lastPlatformYPosition;
+        Vector3 startPosition = new Vector3(Random.Range(-platformXSpread, platformXSpread), newPlatformYPosition, Random.Range(0, platformZSpread)) + transform.position;
+        Vector3 updatedPosition = startPosition * numUnits;
 
         Instantiate(platformUnitPrefab, startPosition, Quaternion.identity);
+        lastPlatformYPosition = startPosition.y;
         
         for (int i=0; i < numUnits; i++)
         {
@@ -43,6 +46,9 @@ public class Controller_PlatformSpawner : MonoBehaviour
             Instantiate(platformUnitPrefab, updatedPosition, Quaternion.identity);
         }
     }
+
+        // Platform should only generate in increments of 5 units above the last platform
+        
 
 }
 

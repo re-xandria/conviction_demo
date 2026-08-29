@@ -47,14 +47,12 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
 
-        // Only emable jumping if player is touching the ground
+        // Only allow jumping if velocity is not changing
         if (context.performed && !isJumping)
         {
             playerBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        // Can we see if player velocity is changing?
-        // Only allow jumping if velocity is not changing
     }
 
 }
