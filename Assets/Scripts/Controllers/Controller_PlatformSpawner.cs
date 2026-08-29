@@ -4,6 +4,7 @@ public class Controller_PlatformSpawner : MonoBehaviour
 {
 
     public GameObject platformUnitPrefab;
+    [Range(1, 10)]
     public int numPlatforms = 5;
    
     public float platformXSpread = 0f;
